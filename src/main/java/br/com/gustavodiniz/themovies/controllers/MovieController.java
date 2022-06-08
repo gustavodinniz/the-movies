@@ -1,13 +1,22 @@
 package br.com.gustavodiniz.themovies.controllers;
 
-import br.com.gustavodiniz.themovies.dtos.TheMovieDbApiResponse;
+import br.com.gustavodiniz.themovies.dtos.MovieDTO;
+import br.com.gustavodiniz.themovies.models.MovieModel;
 import br.com.gustavodiniz.themovies.services.MovieService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/movies")
@@ -16,19 +25,21 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
-
-    @Value("${services.the-movie-db-api.apiKey}")
-    private String apiKey;
-
-    @Value("${services.the-movie-db-api.language}")
-    private String language;
-
-    private Long page = 1L;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<TheMovieDbApiResponse> findTopRated() {
+    public ResponseEntity<Page<MovieDTO>> findAll(@PageableDefault(page = 0, size = 10, sort = "movieId", direction = Sort.Direction.ASC) Pageable pageable) {
+        var movieDTO = movieService.findAll(pageable)
+                .stream()
+                .map(x -> modelMapper.map(x, MovieDTO.class)).collect(Collectors.toList());
+        Page<MovieDTO> page = new PageImpl<>(movieDTO);
+        return ResponseEntity.ok().body(page);
+    }
 
-        var movieDbResponse = movieService.findTopRated(apiKey, language, page);
-        return ResponseEntity.ok().body(movieDbResponse);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<MovieDTO> findById(@PathVariable Long id) {
+        MovieModel movieModel = movieService.findById(id);
+        return ResponseEntity.ok().body(modelMapper.map(movieModel, MovieDTO.class));
     }
 }

@@ -1,6 +1,5 @@
 package br.com.gustavodiniz.themovies.models;
 
-import br.com.gustavodiniz.themovies.enums.Genres;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,11 +22,8 @@ public class MovieModel implements Serializable {
             joinColumns = @JoinColumn(name = "movieId"))
     private Set<Long> genres;
 
+    @Column(unique = true)
     private Long id;
-
-    private String originalLanguage;
-
-    private String original_title;
 
     @Column(columnDefinition = "text")
     private String overview;

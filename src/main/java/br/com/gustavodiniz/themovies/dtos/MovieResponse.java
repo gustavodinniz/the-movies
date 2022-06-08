@@ -17,12 +17,6 @@ public class MovieResponse {
 
     public Long id;
 
-    @JsonProperty("original_language")
-    public String originalLanguage;
-
-    @JsonProperty("original_title")
-    public String original_title;
-
     public String overview;
 
     public Double popularity;
