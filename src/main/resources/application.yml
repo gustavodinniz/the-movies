@@ -1,2 +1,8 @@
 server:
   port: 8081
+
+services:
+  the-movie-db-api:
+    url: https://api.themoviedb.org/3/movie/top_rated
+    apiKey: 217447754cf3b1c9bcc2b405edb96b7d
+    language: pt-BR
