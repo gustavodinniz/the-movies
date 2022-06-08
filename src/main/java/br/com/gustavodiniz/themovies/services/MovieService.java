@@ -11,4 +11,6 @@ public interface MovieService {
     Page<MovieModel> findAll(Pageable pageable);
 
     MovieModel findById(Long id);
+
+   Page<MovieModel> findSuggestionsByWeather(String city, Pageable pageable);
 }

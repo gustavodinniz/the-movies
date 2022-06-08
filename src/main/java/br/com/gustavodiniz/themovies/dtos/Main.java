@@ -10,18 +10,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Main {
 
-    public Double temp;
+    public Long temp;
 
     @JsonProperty("feels_like")
-    public Double feelsLike;
+    public Long feelsLike;
 
     @JsonProperty("temp_min")
-    public Double tempMin;
+    public Long tempMin;
 
     @JsonProperty("temp_max")
-    public Integer tempMax;
+    public Long tempMax;
 
-    public Integer pressure;
+    public Long pressure;
 
-    public Integer humidity;
+    public Long humidity;
 }

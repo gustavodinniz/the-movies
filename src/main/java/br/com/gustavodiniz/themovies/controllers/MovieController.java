@@ -11,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
@@ -41,5 +38,15 @@ public class MovieController {
     public ResponseEntity<MovieDTO> findById(@PathVariable Long id) {
         MovieModel movieModel = movieService.findById(id);
         return ResponseEntity.ok().body(modelMapper.map(movieModel, MovieDTO.class));
+    }
+
+    @GetMapping(value = "/suggestions/weather")
+    public ResponseEntity<Page<MovieDTO>> findSuggestionsByWeather(@RequestParam(name = "city", required = true) String city,
+                                                                   @PageableDefault(page = 0, size = 10, sort = "movieId", direction = Sort.Direction.ASC) Pageable pageable) {
+        var movieDTO = movieService.findSuggestionsByWeather(city, pageable)
+                .stream()
+                .map(x -> modelMapper.map(x, MovieDTO.class)).collect(Collectors.toList());
+        Page<MovieDTO> page = new PageImpl<>(movieDTO);
+        return ResponseEntity.ok().body(page);
     }
 }

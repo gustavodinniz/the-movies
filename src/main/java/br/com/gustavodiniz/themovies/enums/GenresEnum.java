@@ -1,6 +1,6 @@
 package br.com.gustavodiniz.themovies.enums;
 
-public enum Genres {
+public enum GenresEnum {
 
     ACTION(28L, "Action"),
     ADVENTURE(12L, "Adventure"),
@@ -13,7 +13,7 @@ public enum Genres {
     private Long id;
     private String name;
 
-    Genres(Long id, String name) {
+    GenresEnum(Long id, String name) {
         this.id = id;
         this.name = name;
     }
