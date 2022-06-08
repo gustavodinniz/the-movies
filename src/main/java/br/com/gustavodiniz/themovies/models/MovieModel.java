@@ -1,10 +1,11 @@
 package br.com.gustavodiniz.themovies.models;
 
+import br.com.gustavodiniz.themovies.enums.Genres;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.Set;
 
 @Data
 @Entity
@@ -15,27 +16,29 @@ public class MovieModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID movieId;
+    private Long movieId;
 
-//    public List<Integer> genreIds;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "movie_genre",
+            joinColumns = @JoinColumn(name = "movieId"))
+    private Set<Long> genres;
 
-    public Long id;
+    private Long id;
 
-    public String originalLanguage;
+    private String originalLanguage;
 
-    @Column(nullable = false)
-    public String original_title;
+    private String original_title;
 
-    public String overview;
+    @Column(columnDefinition = "text")
+    private String overview;
 
-    public Double popularity;
+    private Double popularity;
 
-    public String releaseDate;
+    private String releaseDate;
 
-    @Column(nullable = false)
-    public String title;
+    private String title;
 
-    public Double voteAverage;
+    private Double voteAverage;
 
-    public Long voteCount;
+    private Long voteCount;
 }

@@ -13,14 +13,14 @@ import java.util.List;
 public class MovieResponse {
 
     @JsonProperty("genre_ids")
-    public List<Integer> genreIds;
+    public List<Long> genres;
 
     public Long id;
 
     @JsonProperty("original_language")
     public String originalLanguage;
 
-    @JsonProperty("originalTitle")
+    @JsonProperty("original_title")
     public String original_title;
 
     public String overview;
