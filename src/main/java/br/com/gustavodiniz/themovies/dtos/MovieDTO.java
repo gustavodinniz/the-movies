@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MovieDTO {
 
-    private Long movieId;
     private Long id;
     private String overview;
     private Double popularity;

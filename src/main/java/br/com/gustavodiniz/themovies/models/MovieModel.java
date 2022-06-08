@@ -15,15 +15,12 @@ public class MovieModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long movieId;
+    private Long id;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "movie_genre",
-            joinColumns = @JoinColumn(name = "movieId"))
+            joinColumns = @JoinColumn(name = "id"))
     private Set<Long> genres;
-
-    @Column(unique = true)
-    private Long id;
 
     @Column(columnDefinition = "text")
     private String overview;

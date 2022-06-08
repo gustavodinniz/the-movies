@@ -7,7 +7,6 @@ public enum GenresEnum {
     ANIMATION(16L, "Animation"),
     COMEDY(35L, "Comedy"),
     DRAMA(18L, "Drama"),
-    CRIME(80L, "Crime"),
     DOCUMENTARY(99L, "Documentary");
 
     private Long id;

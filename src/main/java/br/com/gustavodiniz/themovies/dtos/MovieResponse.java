@@ -15,8 +15,6 @@ public class MovieResponse {
     @JsonProperty("genre_ids")
     public List<Long> genres;
 
-    public Long id;
-
     public String overview;
 
     public Double popularity;

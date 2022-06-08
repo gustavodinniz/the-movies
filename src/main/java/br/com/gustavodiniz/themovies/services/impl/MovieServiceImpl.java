@@ -2,6 +2,7 @@ package br.com.gustavodiniz.themovies.services.impl;
 
 import br.com.gustavodiniz.themovies.clients.MovieClient;
 import br.com.gustavodiniz.themovies.clients.WeatherClient;
+import br.com.gustavodiniz.themovies.dtos.MovieDTO;
 import br.com.gustavodiniz.themovies.dtos.TheMovieDbApiResponse;
 import br.com.gustavodiniz.themovies.dtos.WeatherTheMapApiResponse;
 import br.com.gustavodiniz.themovies.enums.GenresEnum;
@@ -67,11 +68,26 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Page<MovieModel> findSuggestionsByWeather(String city, Pageable pageable) {
+    public Page<MovieModel> getSuggestionsByWeather(String city, Pageable pageable) {
         var weather = weatherClient.getWeatherByCity(appId, units, language, city)
                 .orElseThrow(() -> new ErrorException("Unable to complete the request"));
-
         return findMoviesByGenres(weather);
+    }
+
+    @Override
+    public MovieModel create(MovieDTO movieDTO) {
+        return movieRepository.save(modelMapper.map(movieDTO, MovieModel.class));
+    }
+
+    @Override
+    public void delete(Long id) {
+        findById(id);
+        movieRepository.deleteById(id);
+    }
+
+    @Override
+    public MovieModel update(MovieDTO movieDTO) {
+        return movieRepository.save(modelMapper.map(movieDTO, MovieModel.class));
     }
 
     private PageImpl<MovieModel> findMoviesByGenres(WeatherTheMapApiResponse weather) {
