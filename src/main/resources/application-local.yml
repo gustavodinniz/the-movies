@@ -6,6 +6,11 @@ services:
     url: https://api.themoviedb.org/3/movie/top_rated
     apiKey: 217447754cf3b1c9bcc2b405edb96b7d
     language: pt-BR
+  weather-api:
+    url: https://api.openweathermap.org/data/2.5/weather
+    appId: 99ae411ab1917a4864fa14a72ba2af32
+    units: metric
+    lang: pt_br
 
 
 spring:
