@@ -3,6 +3,7 @@ package br.com.gustavodiniz.themovies.controllers.exceptions;
 import br.com.gustavodiniz.themovies.services.exceptions.AuthorizationException;
 import br.com.gustavodiniz.themovies.services.exceptions.DataIntegrityException;
 import br.com.gustavodiniz.themovies.services.exceptions.ObjectNotFoundException;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -17,6 +18,12 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException exception, HttpServletRequest request) {
+        StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), exception.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<StandardError> objectNotFound(FeignException exception, HttpServletRequest request) {
         StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), exception.getMessage(), System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
