@@ -3,7 +3,6 @@ package br.com.gustavodiniz.themovies.enums;
 public enum GenresEnum {
 
     ACTION(28L, "Action"),
-    ADVENTURE(12L, "Adventure"),
     ANIMATION(16L, "Animation"),
     COMEDY(35L, "Comedy"),
     DRAMA(18L, "Drama"),
