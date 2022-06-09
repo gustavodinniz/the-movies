@@ -1,6 +1,8 @@
 package br.com.gustavodiniz.themovies.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +10,8 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "TB_MOVIES")
 public class MovieModel implements Serializable {
 
