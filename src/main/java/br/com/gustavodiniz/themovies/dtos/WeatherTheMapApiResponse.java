@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WeatherTheMapApiResponse {
 
-    private Main main;
+    private MainResponse main;
 
 }
