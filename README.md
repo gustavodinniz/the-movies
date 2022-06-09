@@ -2,6 +2,17 @@
 
 ## Sobre esse projeto:
 
+A API foi construída utilizando:
+
+- Java 11
+- Spring Boot 2.7.0
+- Spring Web
+- Spring Data JPA
+- Spring Cloud OpenFeign
+- H2 Database
+- Swagger
+- JUnit 5
+
 API possui integração com duas APIs externas:
 
 Movies: https://www.themoviedb.org/documentation/api
@@ -10,13 +21,13 @@ Weather: https://openweathermap.org/api
 
 A integração foi feita utilizando Spring Cloud OpenFeign.
 
-O metódo findTopRated() no client MovieClient faz uma chamada a API externa  do The Movie DB passando os paramêtros necessários e obtém os filmes mais bem 
+O metodo findTopRated() no client MovieClient faz uma chamada a API externa  do The Movie DB passando os paramêtros necessários e obtém os filmes mais bem 
 avaliados.
 
-O metódo getWeatherByCity() no client WeatherClient faz uma chamada a API externa do Open Weather e obtém a temperatura atual da cidade desejada.
+O metodo getWeatherByCity() no client WeatherClient faz uma chamada a API externa do Open Weather e obtém a temperatura atual da cidade desejada.
 
 Ao startar o projeto a classe LocalConfig, dentro do package configs, realiza cinco chamadas ao método findTopRated() no client MovieClient, obtendo as 
-cinco primeiras páginas contendo os filmes mais bem avaliados e após isso salva os filmes no banco de dados.
+cinco primeiras páginas contendo os filmes mais bem avaliados e após isso salva os filmes no banco de dados. 
 
 Os seguintes endpoints foram implementados:
 
@@ -25,7 +36,8 @@ Os seguintes endpoints foram implementados:
 - `POST /movies` insere um novo filme
 - `PUT /movies/{id}` atualiza um filme
 - `DELETE /movies/{id}` exclui um filme
-- `GET /movies/suggestions` obtém os sugestões de filmes baseado na temperatura atual
+- `GET /movies/suggestions?city=Belo Horizonte` obtém as sugestões de filmes baseado na temperatura atual
+- `GET /weathers?city=Belo Horizonte` obtém a temperatura atual
 
 Foram implementados alguns testes para os endpoints acima.
 
