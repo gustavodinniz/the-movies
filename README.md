@@ -37,6 +37,12 @@ As sugestões de filmes são feitas da seguintes forma:
 - Temperatura entre 0 e 20 graus, são sugeridos filmes do gênero de Drama.
 - Temperatura abaixo de 0 grau, são sugeridos filmes do gênero de Documentários.
 
+O endpoint de sugestões gera logs na API mostrando a cidade consultada, a temperatura atual e o genero dos filmes sendo exibidos.
+
+Os generos dos filmes foram obtidos através da requisição: 
+https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US
+e mapeados para uma ENUM.
+
 A API possui documentação com Swagger disponível na seguinte URL: http://localhost:8081/swagger-ui.html
 
 Collection no Postman utilizada para testes: https://www.getpostman.com/collections/7464bb20067292e1294d
