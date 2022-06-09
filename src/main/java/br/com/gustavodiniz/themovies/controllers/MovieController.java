@@ -3,6 +3,7 @@ package br.com.gustavodiniz.themovies.controllers;
 import br.com.gustavodiniz.themovies.dtos.MovieDTO;
 import br.com.gustavodiniz.themovies.models.MovieModel;
 import br.com.gustavodiniz.themovies.services.MovieService;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.stream.Collectors;
 
+@Log4j2
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
@@ -34,12 +36,14 @@ public class MovieController {
                 .stream()
                 .map(x -> modelMapper.map(x, MovieDTO.class)).collect(Collectors.toList());
         Page<MovieDTO> page = new PageImpl<>(movieDTO);
+        log.info("Showing all movies.");
         return ResponseEntity.ok().body(page);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<MovieDTO> findById(@PathVariable Long id) {
         MovieModel movieModel = movieService.findById(id);
+        log.info("Showing movie with id: {}.", id);
         return ResponseEntity.ok().body(modelMapper.map(movieModel, MovieDTO.class));
     }
 
@@ -58,12 +62,14 @@ public class MovieController {
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(movieService.create(movieDTO).getId()).toUri();
+        log.info("New movie created successfully.");
         return ResponseEntity.created(uri).build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MovieDTO> delete(@PathVariable Long id) {
         movieService.delete(id);
+        log.info("Movie with id: {} has been deleted successfully.", id);
         return ResponseEntity.noContent().build();
     }
 
@@ -71,6 +77,7 @@ public class MovieController {
     public ResponseEntity<MovieDTO> update(@PathVariable Long id, @RequestBody @Valid MovieDTO movieDTO) {
         movieDTO.setId(id);
         MovieModel movieModel = movieService.update(movieDTO);
+        log.info("Movie with id: {} has been updated successfully.", movieModel.getId());
         return ResponseEntity.ok().body(modelMapper.map(movieModel, MovieDTO.class));
     }
 }

@@ -11,6 +11,7 @@ import br.com.gustavodiniz.themovies.repositories.MovieRepository;
 import br.com.gustavodiniz.themovies.services.MovieService;
 import br.com.gustavodiniz.themovies.services.exceptions.ErrorException;
 import br.com.gustavodiniz.themovies.services.exceptions.ObjectNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Service
 public class MovieServiceImpl implements MovieService {
 
@@ -71,6 +73,7 @@ public class MovieServiceImpl implements MovieService {
     public Page<MovieModel> getSuggestionsByWeather(String city, Pageable pageable) {
         var weather = weatherClient.getWeatherByCity(appId, units, language, city)
                 .orElseThrow(() -> new ErrorException("Unable to complete the request"));
+        log.info("Current temperature in {} is {} degrees Celsius.", city, weather.getMain().getTemp());
         return findMoviesByGenres(weather);
     }
 
@@ -94,26 +97,31 @@ public class MovieServiceImpl implements MovieService {
 
         if (weather.getMain().getTemp() > 40L) {
             List<MovieModel> listMovies = movieRepository.findByGenres(GenresEnum.ACTION.getId());
+            log.info("Suggestion: {} movies.", GenresEnum.ACTION.getName());
             return new PageImpl<>(listMovies);
         }
 
         if (weather.getMain().getTemp() >= 36L && weather.getMain().getTemp() <= 40L) {
             List<MovieModel> listMovies = movieRepository.findByGenres(GenresEnum.COMEDY.getId());
+            log.info("Suggestion: {} movies.", GenresEnum.COMEDY.getName());
             return new PageImpl<>(listMovies);
         }
 
         if (weather.getMain().getTemp() > 20L && weather.getMain().getTemp() <= 35L) {
             List<MovieModel> listMovies = movieRepository.findByGenres(GenresEnum.ANIMATION.getId());
+            log.info("Suggestion: {} movies.", GenresEnum.ANIMATION.getName());
             return new PageImpl<>(listMovies);
         }
 
         if (weather.getMain().getTemp() >= 0L && weather.getMain().getTemp() <= 20L) {
             List<MovieModel> listMovies = movieRepository.findByGenres(GenresEnum.DRAMA.getId());
+            log.info("Suggestion: {} movies.", GenresEnum.DRAMA.getName());
             return new PageImpl<>(listMovies);
         }
 
         if (weather.getMain().getTemp() < 0L) {
             List<MovieModel> listMovies = movieRepository.findByGenres(GenresEnum.DOCUMENTARY.getId());
+            log.info("Suggestion: {}.", GenresEnum.DOCUMENTARY.getName());
             return new PageImpl<>(listMovies);
         }
 
