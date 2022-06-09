@@ -3,7 +3,9 @@
 ## Sobre esse projeto:
 
 API possui integração com duas APIs externas:
+
 Movies: https://www.themoviedb.org/documentation/api
+
 Weather: https://openweathermap.org/api
 
 A integração foi feita utilizando Spring Cloud OpenFeign.
