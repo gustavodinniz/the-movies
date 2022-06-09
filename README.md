@@ -12,6 +12,7 @@ A integração foi feita utilizando Spring Cloud OpenFeign.
 
 O metódo findTopRated() no client MovieClient faz uma chamada a API externa  do The Movie DB passando os paramêtros necessários e obtém os filmes mais bem 
 avaliados.
+
 O metódo getWeatherByCity() no client WeatherClient faz uma chamada a API externa do Open Weather e obtém a temperatura atual da cidade desejada.
 
 Ao startar o projeto a classe LocalConfig, dentro do package configs, realiza cinco chamadas ao método findTopRated() no client MovieClient, obtendo as 
