@@ -39,9 +39,8 @@ As sugestões de filmes são feitas da seguintes forma:
 
 O endpoint de sugestões gera logs na API mostrando a cidade consultada, a temperatura atual e o genero dos filmes sendo exibidos.
 
-Os generos dos filmes foram obtidos através da requisição: 
+Os generos dos filmes foram obtidos através da requisição abaixo e mapeados para uma ENUM:
 https://api.themoviedb.org/3/genre/movie/list?api_key={API_KEY}&language=en-US
-e mapeados para uma ENUM.
 
 A API possui documentação com Swagger disponível na seguinte URL: http://localhost:8081/swagger-ui.html
 
