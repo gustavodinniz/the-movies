@@ -39,4 +39,6 @@ As sugestões de filmes são feitas da seguintes forma:
 
 A API possui documentação com Swagger disponível na seguinte URL: http://localhost:8081/swagger-ui.html
 
+Collection no Postman utilizada para testes: https://www.getpostman.com/collections/7464bb20067292e1294d
+
 
