@@ -9,6 +9,7 @@ import br.com.gustavodiniz.themovies.enums.GenresEnum;
 import br.com.gustavodiniz.themovies.models.MovieModel;
 import br.com.gustavodiniz.themovies.repositories.MovieRepository;
 import br.com.gustavodiniz.themovies.services.MovieService;
+import br.com.gustavodiniz.themovies.services.exceptions.DataIntegrityException;
 import br.com.gustavodiniz.themovies.services.exceptions.ErrorException;
 import br.com.gustavodiniz.themovies.services.exceptions.ObjectNotFoundException;
 import lombok.extern.log4j.Log4j2;
@@ -79,6 +80,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieModel create(MovieDTO movieDTO) {
+        findByTitle(movieDTO);
         return movieRepository.save(modelMapper.map(movieDTO, MovieModel.class));
     }
 
@@ -126,5 +128,12 @@ public class MovieServiceImpl implements MovieService {
         }
 
         return new PageImpl<>(new ArrayList<>());
+    }
+
+    private void findByTitle(MovieDTO movieDTO) {
+        Optional<MovieModel> movieModelOptional = movieRepository.findByTitle(movieDTO.getTitle());
+        if (movieModelOptional.isPresent() && !movieModelOptional.get().getId().equals(movieDTO.getId())) {
+            throw new DataIntegrityException("There is already a movie with that name registered in the system.");
+        }
     }
 }

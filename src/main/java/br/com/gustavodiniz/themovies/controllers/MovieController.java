@@ -47,16 +47,6 @@ public class MovieController {
         return ResponseEntity.ok().body(modelMapper.map(movieModel, MovieDTO.class));
     }
 
-    @GetMapping(value = "/suggestions")
-    public ResponseEntity<Page<MovieDTO>> getSuggestions(@RequestParam(name = "city", required = true) String city,
-                                                                   @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        var movieDTO = movieService.getSuggestionsByWeather(city, pageable)
-                .stream()
-                .map(x -> modelMapper.map(x, MovieDTO.class)).collect(Collectors.toList());
-        Page<MovieDTO> page = new PageImpl<>(movieDTO);
-        return ResponseEntity.ok().body(page);
-    }
-
     @PostMapping
     public ResponseEntity<MovieDTO> create(@RequestBody @Valid MovieDTO movieDTO) {
         URI uri = ServletUriComponentsBuilder
@@ -79,5 +69,15 @@ public class MovieController {
         MovieModel movieModel = movieService.update(movieDTO);
         log.info("Movie with id: {} has been updated successfully.", movieModel.getId());
         return ResponseEntity.ok().body(modelMapper.map(movieModel, MovieDTO.class));
+    }
+
+    @GetMapping(value = "/suggestions")
+    public ResponseEntity<Page<MovieDTO>> getSuggestions(@RequestParam(name = "city", required = true) String city,
+                                                         @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        var movieDTO = movieService.getSuggestionsByWeather(city, pageable)
+                .stream()
+                .map(x -> modelMapper.map(x, MovieDTO.class)).collect(Collectors.toList());
+        Page<MovieDTO> page = new PageImpl<>(movieDTO);
+        return ResponseEntity.ok().body(page);
     }
 }

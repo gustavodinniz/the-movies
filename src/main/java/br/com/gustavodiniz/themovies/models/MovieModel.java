@@ -33,6 +33,7 @@ public class MovieModel implements Serializable {
 
     private String releaseDate;
 
+    @Column(unique = true)
     private String title;
 
     private Double voteAverage;

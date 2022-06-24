@@ -37,33 +37,28 @@ public class LocalConfig {
 
     @Bean
     public void startDB() {
-        Long page1 = 1L;
-        Long page2 = 2L;
-        Long page3 = 3L;
-        Long page4 = 4L;
-        Long page5 = 5L;
 
-        var response1 = movieClient.findTopRated(apiKey, language, page1).orElseThrow(() -> new ErrorException("Unable to complete the request"));
+        var response1 = movieClient.findTopRated(apiKey, language, 1L).orElseThrow(() -> new ErrorException("Unable to complete the request"));
         List<MovieModel> movies1 = response1.getResults().stream().map(x -> modelMapper.map(x, MovieModel.class)).collect(Collectors.toList());
         movieRepository.saveAll(movies1);
         log.info("Top rated movies have been saved successfully: page 1");
 
-        var response2 = movieClient.findTopRated(apiKey, language, page2).orElseThrow(() -> new ErrorException("Unable to complete the request"));
+        var response2 = movieClient.findTopRated(apiKey, language, 2L).orElseThrow(() -> new ErrorException("Unable to complete the request"));
         List<MovieModel> movies2 = response2.getResults().stream().map(x -> modelMapper.map(x, MovieModel.class)).collect(Collectors.toList());
         movieRepository.saveAll(movies2);
         log.info("Top rated movies have been saved successfully: page 2");
 
-        var response3 = movieClient.findTopRated(apiKey, language, page3).orElseThrow(() -> new ErrorException("Unable to complete the request"));
+        var response3 = movieClient.findTopRated(apiKey, language, 3L).orElseThrow(() -> new ErrorException("Unable to complete the request"));
         List<MovieModel> movies3 = response3.getResults().stream().map(x -> modelMapper.map(x, MovieModel.class)).collect(Collectors.toList());
         movieRepository.saveAll(movies3);
         log.info("Top rated movies have been saved successfully: page 3");
 
-        var response4 = movieClient.findTopRated(apiKey, language, page4).orElseThrow(() -> new ErrorException("Unable to complete the request"));
+        var response4 = movieClient.findTopRated(apiKey, language, 4L).orElseThrow(() -> new ErrorException("Unable to complete the request"));
         List<MovieModel> movies4 = response4.getResults().stream().map(x -> modelMapper.map(x, MovieModel.class)).collect(Collectors.toList());
         movieRepository.saveAll(movies4);
         log.info("Top rated movies have been saved successfully: page 4");
 
-        var response5 = movieClient.findTopRated(apiKey, language, page5).orElseThrow(() -> new ErrorException("Unable to complete the request"));
+        var response5 = movieClient.findTopRated(apiKey, language, 5L).orElseThrow(() -> new ErrorException("Unable to complete the request"));
         List<MovieModel> movies5 = response5.getResults().stream().map(x -> modelMapper.map(x, MovieModel.class)).collect(Collectors.toList());
         movieRepository.saveAll(movies5);
         log.info("Top rated movies have been saved successfully: page 5");
